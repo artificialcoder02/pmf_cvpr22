@@ -2,7 +2,7 @@ import os
 import torch
 import numpy as np
 import random
-import collections
+import collections.abc
 
 
 class AverageMeter(object):
@@ -57,9 +57,9 @@ def to_device(input, device):
         return input.to(device=device, non_blocking=True)
     elif isinstance(input, str):
         return input
-    elif isinstance(input, collections.Mapping):
+    elif isinstance(input, collections.abc.Mapping):
         return {k: to_device(sample, device=device) for k, sample in input.items()}
-    elif isinstance(input, collections.Sequence):
+    elif isinstance(input, collections.abc.Sequence):
         return [to_device(sample, device=device) for sample in input]
     else:
         raise TypeError("Input must contain tensor, dict or list, found {type(input)}")

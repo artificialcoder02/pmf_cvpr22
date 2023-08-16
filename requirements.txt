@@ -8,3 +8,5 @@ ftfy
 wget
 tabulate
 tables
+protobuf==3.20.*
+regex

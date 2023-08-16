@@ -186,7 +186,7 @@ if __name__ == '__main__' :
                                          normalize
                                         ])
 
-    TrainEpisodeSampler = EpisodeDataset(imgDir = '../data/cifar-fs/train/',
+    TrainEpisodeSampler = EpisodeDataset(imgDir = r'C:\Users\rctuh\Desktop\ISRO\pmf_cvpr22\data\cifar-fs\train',
                                          nCls = 5,
                                          nSupport = 5,
                                          nQuery = 15,
