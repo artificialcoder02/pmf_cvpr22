@@ -7,3 +7,5 @@
 *.tar
 *.zip
 *.gz
+*\meta_dataset_h5
+*\outputs
