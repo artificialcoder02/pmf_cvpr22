@@ -26,7 +26,7 @@ class EpisodeDataset(data.Dataset):
     :param int inputW: input image size, dimension W;
     :param int inputH: input image size, dimension H;
     """
-    def __init__(self, imgDir, nCls, nSupport, nQuery, transform, inputW, inputH, nEpisode=2000):
+    def __init__(self, imgDir, nCls, nSupport, nQuery, transform, inputW, inputH, nEpisode=2000): #number of episode is mentioned
         super().__init__()
 
         self.imgDir = imgDir
@@ -175,18 +175,19 @@ def TrainLoader(batchSize, imgDir, trainTransform) :
 
 if __name__ == '__main__' :
     import torchvision.transforms as transforms
-    mean = [x/255.0 for x in [120.39586422,  115.59361427, 104.54012653]]
-    std = [x/255.0 for x in [70.68188272,  68.27635443,  72.54505529]]
+    mean = [0.485, 0.456, 0.406]  # ImageNet mean values
+    std = [0.229, 0.224, 0.225]  # ImageNet standard deviation values
     normalize = transforms.Normalize(mean=mean, std=std)
+    
     trainTransform = transforms.Compose([
-                                         transforms.RandomCrop(32, padding=8),
-                                         transforms.RandomHorizontalFlip(),
-                                         lambda x: np.asarray(x),
-                                         transforms.ToTensor(),
-                                         normalize
-                                        ])
+        transforms.RandomResizedCrop((img_size, img_size), scale=(0.8, 1.0)),
+        transforms.ColorJitter(brightness=0.4, contrast=0.4, saturation=0.4),
+        transforms.RandomHorizontalFlip(),
+        transforms.ToTensor(),
+        normalize
+    ])
 
-    TrainEpisodeSampler = EpisodeDataset(imgDir = r'C:\Users\rctuh\Desktop\ISRO\pmf_cvpr22\data\cifar-fs\train',
+    TrainEpisodeSampler = EpisodeDataset(imgDir = r"C:\Users\rctuh\Desktop\ISRO\pmf_cvpr22\data\eurosat\2750\train",
                                          nCls = 5,
                                          nSupport = 5,
                                          nQuery = 15,

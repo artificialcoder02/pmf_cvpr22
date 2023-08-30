@@ -32,12 +32,12 @@ def main(data_folder, num_support, num_query, num_classes, num_shots, num_episod
         json.dump(episodes, json_file, indent=4)
 
 if __name__ == "__main__":
-    data_folder = r"C:\Users\rctuh\Desktop\ISRO\pmf_cvpr22\data\EuroSAT\2750"  # Directory containing class folders
+    data_folder = r"data/Mini-ImageNet/val"  # Directory containing class folders
     num_classes = 5  # Number of classes in each episode
     num_shots = 5    # Number of support images per class
     num_query = 15   # Number of query images per class
-    num_episodes = 100  # Number of episodes
-    output_filename = "episodes.json"  # Output JSON filename
+    num_episodes = 10  # Number of episodes
+    output_filename = "eurosat_5way_5shot_5Ep_setting.json"  # Output JSON filename
     
     main(data_folder, num_shots, num_query, num_classes, num_shots, num_episodes, output_filename)
 
