@@ -13,7 +13,7 @@ from torchvision.datasets import ImageFolder
 from PIL import ImageFile
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
-EuroSAT_path = "./data/EuroSAT/2750"
+EuroSAT_path = r"C:\Users\rctuh\Desktop\ISRO\pmf_cvpr22\data\EUROSAT\2750"
 identity = lambda x:x
 
 
@@ -48,7 +48,7 @@ class SetDataset:
     def __init__(self, batch_size, transform):
 
         self.sub_meta = {}
-        self.cl_list = range(10)
+        self.cl_list = range(10) #Telling that it has 10 classes
 
         for cl in self.cl_list:
             self.sub_meta[cl] = []
@@ -122,7 +122,7 @@ class TransformLoader:
             return method(self.image_size)
         elif transform_type=='CenterCrop':
             return method(self.image_size)
-        elif transform_type=='Scale':
+        elif transform_type=='Resize':
             return method([int(self.image_size*1.15), int(self.image_size*1.15)])
         elif transform_type=='Normalize':
             return method(**self.normalize_param )
@@ -133,7 +133,7 @@ class TransformLoader:
         if aug:
             transform_list = ['RandomSizedCrop', 'ImageJitter', 'RandomHorizontalFlip', 'ToTensor', 'Normalize']
         else:
-            transform_list = ['Scale','CenterCrop', 'ToTensor', 'Normalize']
+            transform_list = ['Resize','CenterCrop', 'ToTensor', 'Normalize']
 
         transform_funcs = [ self.parse_transform(x) for x in transform_list]
         transform = transforms.Compose(transform_funcs)

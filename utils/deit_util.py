@@ -14,6 +14,11 @@ import datetime
 import torch
 import torch.distributed as dist
 
+''' os.environ['PL_TORCH_DISTRIBUTED_BACKEND'] = 'gloo'
+os.environ['NCCL_DEBUG'] = 'INFO'
+torch.distributed.init_process_group(backend="gloo")
+os.environ['LOCAL_RANK'] = '1' '''
+
 
 class SmoothedValue(object):
     """Track a series of values and provide access to smoothed values over a

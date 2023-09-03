@@ -22,7 +22,6 @@ from datasets import get_loaders
 from utils.args import get_args_parser
 from models import get_model
 
-
 def main(args):
     utils.init_distributed_mode(args)
 

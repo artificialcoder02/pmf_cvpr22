@@ -26,9 +26,9 @@ def dataset_setting(nSupport, img_size=32):
                                        normalize])
     inputW, inputH, nbCls = img_size, img_size, 64
 
-    trainDir = r'C:\Users\rctuh\Desktop\ISRO\pmf_cvpr22\data\cifar-fs\train/'
-    valDir = r'C:\Users\rctuh\Desktop\ISRO\pmf_cvpr22\data\cifar-fs\val/'
-    testDir = r'C:\Users\rctuh\Desktop\ISRO\pmf_cvpr22\data\cifar-fs\test/'
+    trainDir = r'C:\Users\rctuh\Desktop\ISRO\pmf_cvpr22\data\cifar-fs\train'
+    valDir = r'C:\Users\rctuh\Desktop\ISRO\pmf_cvpr22\data\cifar-fs\val'
+    testDir = r'C:\Users\rctuh\Desktop\ISRO\pmf_cvpr22\data\cifar-fs\test'
     episodeJson = r'C:\Users\rctuh\Desktop\ISRO\pmf_cvpr22\data\cifar-fs\val1000Episode_5_way_1_shot.json' if nSupport == 1 \
             else r'C:\Users\rctuh\Desktop\ISRO\pmf_cvpr22\data\cifar-fs\val1000Episode_5_way_5_shot.json'
 

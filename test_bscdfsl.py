@@ -16,6 +16,7 @@ from models import get_model
 from datasets import get_bscd_loader
 
 
+
 def main(args):
     args.distributed = False # CDFSL dataloader doesn't support DDP
     args.eval = True
@@ -102,6 +103,7 @@ def main(args):
                 f.write(table)
 
 if __name__ == '__main__':
+    
     parser = get_args_parser()
     args = parser.parse_args()
     args.train_tag = 'pt' if args.resume == '' else 'ep'
