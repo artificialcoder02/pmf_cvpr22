@@ -105,7 +105,7 @@ shutil.rmtree('cifar-100-python', ignore_errors=True)
 print("Depending on the split files, organize train, val and test sets")
 for datatype in ['train', 'val', 'test']:
     os.makedirs(os.path.join('cifar-fs', datatype), exist_ok=True)
-    with open(os.path.join('cifar-fs-splits', datatype + '.txt'), 'r') as f:
+    with open(os.path.join(r'C:\Users\rctuh\Desktop\ISRO\pmf_cvpr22\data\cifar-fs-splits\cifar-fs-splits', datatype + '.txt'), 'r') as f:
         content = f.readlines()
     # Remove whitespace characters like `\n` at the end of each line
     classes = [x.strip() for x in content]

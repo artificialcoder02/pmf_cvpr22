@@ -5,6 +5,7 @@ import random
 import torch
 import torch.backends.cudnn as cudnn
 import json
+import torch.onnx
 
 from pathlib import Path
 from tabulate import tabulate
@@ -15,10 +16,8 @@ from utils.args import get_args_parser
 from models import get_model
 from datasets import get_bscd_loader
 
-
-
 def main(args):
-    args.distributed = False # CDFSL dataloader doesn't support DDP
+    args.distributed = False  # CDFSL dataloader doesn't support DDP
     args.eval = True
 
     print(args)
@@ -44,7 +43,6 @@ def main(args):
     ##############################################
     # Test
     criterion = torch.nn.CrossEntropyLoss()
-    #datasets = ["EuroSAT", "ISIC", "CropDisease", "ChestX"]
     datasets = args.cdfsl_domains
     var_accs = {}
 
@@ -68,6 +66,16 @@ def main(args):
                     best_lr = lr
             model.lr = best_lr
             print(f"### Selected lr = {best_lr}")
+
+        # Save the model in ONNX format
+        onnx_model_path = f"model_{domain}.onnx"
+        dummy_input = torch.randn(1, 3, args.image_size, args.image_size).to(device)
+        torch.onnx.export(model, dummy_input, onnx_model_path, verbose=True)
+
+        # Load the ONNX model back into PyTorch
+        loaded_model = torch.onnx.load(onnx_model_path)
+        model = torch.nn.Sequential(*list(loaded_model.children())[:-1])
+        model.to(device)
 
         # final classification
         data_loader_val.generator.manual_seed(args.seed + 10000)
@@ -103,7 +111,6 @@ def main(args):
                 f.write(table)
 
 if __name__ == '__main__':
-    
     parser = get_args_parser()
     args = parser.parse_args()
     args.train_tag = 'pt' if args.resume == '' else 'ep'
