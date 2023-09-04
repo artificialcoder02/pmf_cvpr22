@@ -43,7 +43,7 @@ def main(args):
     ##############################################
     # Test
     criterion = torch.nn.CrossEntropyLoss()
-    datasets = args.cdfsl_domains
+    datasets = args.cdfsl_domains #make changes here
     var_accs = {}
 
     for domain in datasets:

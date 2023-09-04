@@ -9,3 +9,4 @@
 *.gz
 *\meta_dataset_h5
 *\outputs
+*\pmf_metadataset_dino
