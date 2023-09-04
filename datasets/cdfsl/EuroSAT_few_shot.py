@@ -14,8 +14,10 @@ from PIL import ImageFile
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 EuroSAT_path = r"C:\Users\rctuh\Desktop\ISRO\pmf_cvpr22\data\EUROSAT\2750"
-identity = lambda x:x
 
+# Define a regular function instead of lambda
+def identity(x):
+    return x
 
 class SimpleDataset:
     def __init__(self, transform, target_transform=identity):
@@ -43,12 +45,11 @@ class SimpleDataset:
     def __len__(self):
         return len(self.meta['image_names'])
 
-
 class SetDataset:
     def __init__(self, batch_size, transform):
 
         self.sub_meta = {}
-        self.cl_list = range(10) #Telling that it has 10 classes
+        self.cl_list = range(10) # Telling that it has 10 classes
 
         for cl in self.cl_list:
             self.sub_meta[cl] = []
@@ -63,9 +64,9 @@ class SetDataset:
 
         self.sub_dataloader = []
         sub_data_loader_params = dict(batch_size = batch_size,
-                                  shuffle = True,
-                                  num_workers = 0, #use main thread only or may receive multiple batches
-                                  pin_memory = False)
+                                      shuffle = True,
+                                      num_workers = 0, # use main thread only or may receive multiple batches
+                                      pin_memory = False)
         for cl in self.cl_list:
             sub_dataset = SubDataset(self.sub_meta[cl], cl, transform = transform )
             self.sub_dataloader.append( torch.utils.data.DataLoader(sub_dataset, **sub_data_loader_params) )
@@ -107,35 +108,35 @@ class EpisodicBatchSampler(object):
 
 class TransformLoader:
     def __init__(self, image_size,
-                 normalize_param    = dict(mean= [0.485, 0.456, 0.406] , std=[0.229, 0.224, 0.225]),
-                 jitter_param       = dict(Brightness=0.4, Contrast=0.4, Color=0.4)):
+                 normalize_param = dict(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+                 jitter_param = dict(Brightness=0.4, Contrast=0.4, Color=0.4)):
         self.image_size = image_size
         self.normalize_param = normalize_param
         self.jitter_param = jitter_param
 
     def parse_transform(self, transform_type):
-        if transform_type=='ImageJitter':
-            method = ImageJitter( self.jitter_param )
+        if transform_type == 'ImageJitter':
+            method = ImageJitter(self.jitter_param)
             return method
         method = getattr(transforms, transform_type)
-        if transform_type=='RandomSizedCrop':
+        if transform_type == 'RandomSizedCrop':
             return method(self.image_size)
-        elif transform_type=='CenterCrop':
+        elif transform_type == 'CenterCrop':
             return method(self.image_size)
-        elif transform_type=='Resize':
-            return method([int(self.image_size*1.15), int(self.image_size*1.15)])
-        elif transform_type=='Normalize':
-            return method(**self.normalize_param )
+        elif transform_type == 'Resize':
+            return method([int(self.image_size * 1.15), int(self.image_size * 1.15)])
+        elif transform_type == 'Normalize':
+            return method(**self.normalize_param)
         else:
             return method()
 
-    def get_composed_transform(self, aug = False):
+    def get_composed_transform(self, aug=False):
         if aug:
             transform_list = ['RandomSizedCrop', 'ImageJitter', 'RandomHorizontalFlip', 'ToTensor', 'Normalize']
         else:
-            transform_list = ['Resize','CenterCrop', 'ToTensor', 'Normalize']
+            transform_list = ['Resize', 'CenterCrop', 'ToTensor', 'Normalize']
 
-        transform_funcs = [ self.parse_transform(x) for x in transform_list]
+        transform_funcs = [self.parse_transform(x) for x in transform_list]
         transform = transforms.Compose(transform_funcs)
         return transform
 
@@ -150,30 +151,30 @@ class SimpleDataManager(DataManager):
         self.batch_size = batch_size
         self.trans_loader = TransformLoader(image_size)
 
-    def get_data_loader(self, aug): #parameters that would change on train/val set
+    def get_data_loader(self, aug): # parameters that would change on train/val set
         transform = self.trans_loader.get_composed_transform(aug)
         dataset = SimpleDataset(transform)
 
-        data_loader_params = dict(batch_size = self.batch_size, shuffle = True, num_workers = 8, pin_memory = True)
+        data_loader_params = dict(batch_size=self.batch_size, shuffle=True, num_workers=8, pin_memory=True)
         data_loader = torch.utils.data.DataLoader(dataset, **data_loader_params)
 
         return data_loader
 
 class SetDataManager(DataManager):
-    def __init__(self, image_size, n_way=5, n_support=5, n_query=16, n_eposide = 100):
+    def __init__(self, image_size, n_way=5, n_support=5, n_query=16, n_episode=100):
         super(SetDataManager, self).__init__()
         self.image_size = image_size
         self.n_way = n_way
         self.batch_size = n_support + n_query
-        self.n_eposide = n_eposide
+        self.n_episode = n_episode
 
         self.trans_loader = TransformLoader(image_size)
 
-    def get_data_loader(self, aug): #parameters that would change on train/val set
+    def get_data_loader(self, aug): # parameters that would change on train/val set
         transform = self.trans_loader.get_composed_transform(aug)
         dataset = SetDataset(self.batch_size, transform)
-        sampler = EpisodicBatchSampler(len(dataset), self.n_way, self.n_eposide )
-        data_loader_params = dict(batch_sampler = sampler,  num_workers = 8, pin_memory = True)
+        sampler = EpisodicBatchSampler(len(dataset), self.n_way, self.n_episode)
+        data_loader_params = dict(batch_sampler=sampler, num_workers=8, pin_memory=True)
         data_loader = torch.utils.data.DataLoader(dataset, **data_loader_params)
         return data_loader
 

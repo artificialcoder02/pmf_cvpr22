@@ -38,6 +38,9 @@ class ProtoNet(nn.Module):
         supp_f = self.backbone.forward(supp_x.view(-1, C, H, W))
         supp_f = supp_f.view(B, nSupp, -1)
 
+        #supp_y_idx = torch.argmax(supp_y, dim=1, keepdim=True)
+        #supp_y_1hot = F.one_hot(supp_y_idx, num_classes).transpose(1, 2) # B, nC, nSupp
+
         supp_y_1hot = F.one_hot(supp_y, num_classes).transpose(1, 2) # B, nC, nSupp
 
         # B, nC, nSupp x B, nSupp, d = B, nC, d
