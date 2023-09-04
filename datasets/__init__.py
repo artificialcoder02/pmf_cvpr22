@@ -7,9 +7,9 @@ from torch.utils.data import DataLoader
 
 from .samplers import RASampler
 from .episodic_dataset import EpisodeDataset, EpisodeJSONDataset
-from .meta_val_dataset import MetaValDataset
-from .meta_h5_dataset import FullMetaDatasetH5
-from .meta_dataset.utils import Split
+#from .meta_val_dataset import MetaValDataset
+#from .meta_h5_dataset import FullMetaDatasetH5
+#from .meta_dataset.utils import Split
 
 
 def get_sets(args):
@@ -156,12 +156,14 @@ def get_loaders(args, num_tasks, global_rank):
 
     return data_loader_train, data_loader_val
 
-
+#Make Changes here
 def get_bscd_loader(dataset="EuroSAT", test_n_way=5, n_shot=5, image_size=224):
     iter_num = 600
     n_query = 15
     few_shot_params = dict(n_way=test_n_way , n_support=n_shot)
 
+    #if dataset == "DOTA":
+        #from .cdfsl.DOTA_few_shot import SetDataManager
     if dataset == "EuroSAT":
         from .cdfsl.EuroSAT_few_shot import SetDataManager
     elif dataset == "ISIC":
@@ -173,7 +175,7 @@ def get_bscd_loader(dataset="EuroSAT", test_n_way=5, n_shot=5, image_size=224):
     else:
         raise ValueError(f'Datast {dataset} is not supported.')
 
-    datamgr = SetDataManager(image_size, n_eposide=iter_num, n_query=n_query, **few_shot_params)
+    datamgr = SetDataManager(image_size, n_episode=iter_num, n_query=n_query, **few_shot_params)
     novel_loader = datamgr.get_data_loader(aug =False)
 
     def _loader_wrap():
