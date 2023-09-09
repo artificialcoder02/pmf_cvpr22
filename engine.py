@@ -112,7 +112,7 @@ def evaluate(data_loaders, model, criterion, device, seed=None, ep=None):
     elif isinstance(data_loaders, torch.utils.data.DataLoader): # when args.eval = True
         return _evaluate(data_loaders, model, criterion, device, seed, ep)
     else:
-        warnings.warn(f'The structure of {data_loaders} is not recognizable.')
+        warnings.warn(f"The structure of {data_loaders} is not recognizable.")
         return _evaluate(data_loaders, model, criterion, device, seed)
 
 

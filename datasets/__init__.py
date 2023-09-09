@@ -156,7 +156,7 @@ def get_loaders(args, num_tasks, global_rank):
 
     return data_loader_train, data_loader_val
 
-#Make Changes here
+#Make Changes here  
 def get_bscd_loader(dataset="EuroSAT", test_n_way=5, n_shot=5, image_size=224):
     iter_num = 600
     n_query = 15
