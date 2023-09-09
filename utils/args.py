@@ -22,7 +22,7 @@ def get_args_parser():
                         help='dataset path')
     parser.add_argument('--pretrained-checkpoint-path', default='.', type=str,
                         help='path which contains the directories pretrained_ckpts and pretrained_ckpts_converted')
-    parser.add_argument("--dataset", choices=["cifar_fs_elite", "cifar_fs", "mini_imagenet", "meta_dataset"],
+    parser.add_argument("--dataset", choices=["cifar_fs_elite", "cifar_fs", "mini_imagenet", "meta_dataset","EuroSat"],
                         default="cifar_fs",
                         help="Which few-shot dataset.")
 
@@ -38,8 +38,8 @@ def get_args_parser():
     parser.add_argument("--nEpisode", default=2000, type=int,
                         help="Number of episodes for training / testing.")
 
-    # MetaDataset parameters
-    parser.add_argument('--image_size', type=int, default=128,
+      # MetaDataset parameters
+    '''parser.add_argument('--image_size', type=int, default=128,
                         help='Images will be resized to this value')
     parser.add_argument('--base_sources', nargs="+", default=['aircraft', 'cu_birds', 'dtd', 'fungi', 'ilsvrc_2012', 'omniglot', 'quickdraw', 'vgg_flower'],
                         help='List of datasets to use for training')
@@ -84,7 +84,7 @@ def get_args_parser():
     parser.add_argument('--ignore_hierarchy_probability', type=float, default=0.,
                         help='if using a hierarchy, this flag makes the sampler \
                               ignore the hierarchy for this proportion of episodes \
-                              and instead sample categories uniformly.')
+                              and instead sample categories uniformly.') '''
 
     # CDFSL parameters
     parser.add_argument('--test_n_way'  , default=5, type=int,  help='class num to classify for testing (validation) ')
