@@ -37,11 +37,15 @@ class ProtoNet(nn.Module):
         B, nSupp, C, H, W = supp_x.shape
         supp_f = self.backbone.forward(supp_x.view(-1, C, H, W))
         supp_f = supp_f.view(B, nSupp, -1)
+        print("This is the value of Supp Y")
+        print(supp_f)
 
+        #reshaped_ten= supp_f.reshape(-1)
+        #print("The Tensor after reshaping is :"+ reshaped_ten)
         #supp_y_idx = torch.argmax(supp_y, dim=1, keepdim=True)
         #supp_y_1hot = F.one_hot(supp_y_idx, num_classes).transpose(1, 2) # B, nC, nSupp
 
-        supp_y_1hot = F.one_hot(supp_y, num_classes).transpose(1, 2) # B, nC, nSupp
+        supp_y_1hot = F.one_hot(supp_f, num_classes).transpose(1, 2) # B, nC, nSupp
 
         # B, nC, nSupp x B, nSupp, d = B, nC, d
         prototypes = torch.bmm(supp_y_1hot.float(), supp_f)
