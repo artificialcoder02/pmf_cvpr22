@@ -23,7 +23,7 @@ def get_args_parser():
     parser.add_argument('--pretrained-checkpoint-path', default='.', type=str,
                         help='path which contains the directories pretrained_ckpts and pretrained_ckpts_converted')
     parser.add_argument("--dataset", choices=["cifar_fs_elite", "cifar_fs", "mini_imagenet", "meta_dataset","EuroSat"],
-                        default="cifar_fs",
+                        default="EuroSat",
                         help="Which few-shot dataset.")
 
     # Few-shot parameters (Mini-ImageNet & CIFAR-FS)

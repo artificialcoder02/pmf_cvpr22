@@ -19,8 +19,8 @@ def get_sets(args):
         from .cifar_fs_elite import dataset_setting
     elif args.dataset == 'mini_imagenet':
         from .mini_imagenet import dataset_setting
-    elif args.dataset == 'euro_sat':
-        from .euro_sat_dataset import dataset_setting
+    elif args.dataset == 'EuroSat':
+        from .euro_sat import dataset_setting
     elif args.dataset == 'meta_dataset':
         if args.eval:
             trainSet = valSet = None
