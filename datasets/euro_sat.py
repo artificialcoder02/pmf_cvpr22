@@ -27,9 +27,9 @@ def dataset_setting(nSupport, img_size=128):
     
     inputW, inputH, nbCls = img_size, img_size, 10  # Assuming EuroSAT has 10 classes
     
-    trainDir = r"C:\Users\rctuh\Desktop\ISRO\pmf_cvpr22\data\eurosat\2750\train"
-    valDir = r"C:\Users\rctuh\Desktop\ISRO\pmf_cvpr22\data\eurosat\2750\val"
-    testDir = r"C:\Users\rctuh\Desktop\ISRO\pmf_cvpr22\data\eurosat\2750\test"
-    episodeJson = r"C:\Users\rctuh\Desktop\ISRO\pmf_cvpr22\data\eurosat\2750\eurosat_5way_5shot_3Ep_setting.json"  # Replace with actual path
+    trainDir = r"C:\Users\rctuh\Desktop\ISRO\pmf_cvpr22\data\EURO_SPLIT\train"
+    valDir = r"C:\Users\rctuh\Desktop\ISRO\pmf_cvpr22\data\EURO_SPLIT\val"
+    testDir = r"C:\Users\rctuh\Desktop\ISRO\pmf_cvpr22\data\EURO_SPLIT\test"
+    episodeJson = r"C:\Users\rctuh\Desktop\ISRO\pmf_cvpr22\data\EURO_SPLIT\5way5shot_data.json"  # Replace with actual path
     
     return trainTransform, valTransform, inputW, inputH, trainDir, valDir, testDir, episodeJson, nbCls
