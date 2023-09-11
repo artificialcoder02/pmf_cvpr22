@@ -21,6 +21,8 @@ def get_sets(args):
         from .mini_imagenet import dataset_setting
     elif args.dataset == 'EuroSat':
         from .euro_sat import dataset_setting
+    elif args.dataset == 'AerialID':
+        from .aerialid import dataset_setting 
     elif args.dataset == 'meta_dataset':
         if args.eval:
             trainSet = valSet = None
