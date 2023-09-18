@@ -7,8 +7,8 @@ def dataset_setting(nSupport, img_size=600):
 
     :param int nSupport: number of support examples
     """
-    mean = [0.415, 0.456, 0.462]  # ImageNet mean values
-    std = [0.197, 0.209, 0.237]  # ImageNet standard deviation values
+    mean = [0.415, 0.456, 0.462] 
+    std = [0.197, 0.209, 0.237]  
     normalize = transforms.Normalize(mean=mean, std=std)
     
     trainTransform = transforms.Compose([
@@ -27,6 +27,8 @@ def dataset_setting(nSupport, img_size=600):
     
     inputW, inputH, nbCls = img_size, img_size, 10  # Assuming EuroSAT has 10 classes
     
+    #Change the values here
+
     trainDir = r"C:\Users\rctuh\Desktop\ISRO\pmf_cvpr22\data\EURO_SPLIT\train"
     valDir = r"C:\Users\rctuh\Desktop\ISRO\pmf_cvpr22\data\EURO_SPLIT\val"
     testDir = r"C:\Users\rctuh\Desktop\ISRO\pmf_cvpr22\data\EURO_SPLIT\test"
